@@ -1,0 +1,252 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+
+:root {
+    /* Boje inspirisane dizajnom sa slike */
+    --bg-color: #0d0f0d;            /* Skoro crna, mat pozadina */
+    --card-bg: #181a18;          /* Tamno sivo/zelenkasta kartica */
+    --card-border: #232723;      /* Diskretna granica kartica */
+    --input-bg: #111311;         /* Unutrašnjost input polja */
+    
+    --primary-lime: #ccff00;     /* Ultra neonska lime-zelena boja */
+    --lime-hover: #b8e600;       /* Tamnija lime za hover efekat */
+    
+    --text-color: #ffffff;       /* Bela za naslove i glavno čitanje */
+    --text-muted: #8b928b;      /* Mute siva za opise i labele */
+    --font-main: 'Plus Jakarta Sans', sans-serif;
+}
+
+body {
+    font-family: var(--font-main);
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 100vh;
+}
+
+.dashboard-container {
+    width: 100%;
+    max-width: 1400px;
+    padding: 24px;
+    display: grid;
+    grid-template-columns: 380px 1fr;
+    grid-gap: 24px;
+}
+
+/* --- Mat Tamne Kartice Sa Ekstra Zaobljenim Uglovima --- */
+.card {
+    background-color: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 24px; /* Veći radijus kao na telefonu sa slike */
+    padding: 28px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+/* --- Naslovi --- */
+.booking-section h2, .schedule-section h2 {
+    font-size: 22px;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    margin-top: 0;
+    margin-bottom: 20px;
+    color: var(--text-color);
+}
+
+/* --- Forma i Inputi --- */
+.form-group {
+    margin-bottom: 18px;
+}
+
+label {
+    display: block;
+    margin-bottom: 8px;
+    color: var(--text-muted);
+    font-size: 13px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+select, input {
+    width: 100%;
+    padding: 14px 18px;
+    border: 1px solid var(--card-border);
+    border-radius: 16px;
+    background-color: var(--input-bg);
+    color: var(--text-color);
+    font-size: 15px;
+    font-weight: 500;
+    box-sizing: border-box;
+    transition: all 0.2s ease;
+}
+
+select:focus, input:focus {
+    outline: none;
+    border-color: var(--primary-lime);
+}
+
+/* --- Stilizacija Dropdown Opcija --- */
+select option {
+    background-color: #181a18;
+    color: #ffffff;
+    padding: 12px;
+}
+
+input::placeholder {
+    color: var(--text-muted);
+}
+
+/* --- Neonsko Lime Dugme (Kao "Start Workout" na slici) --- */
+button#btnPotvrdi {
+    width: 100%;
+    padding: 16px;
+    border: none;
+    border-radius: 100px; /* Pilula oblik kao na dnu desnog telefona */
+    background-color: var(--primary-lime);
+    color: #000000; /* Crni tekst na neonskoj pozadini za jak kontrast */
+    font-size: 16px;
+    font-weight: 800;
+    letter-spacing: 0.3px;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: transform 0.2s, background-color 0.2s;
+}
+
+button#btnPotvrdi:hover {
+    background-color: var(--lime-hover);
+    transform: translateY(-2px);
+}
+
+/* --- Poruke o Statusu --- */
+#poruka {
+    margin-top: 20px;
+    padding: 12px;
+    border-radius: 12px;
+    text-align: center;
+    font-weight: 600;
+    display: none;
+}
+
+.uspeh {
+    border: 1px solid var(--primary-lime);
+    background-color: rgba(204, 255, 0, 0.1);
+    color: var(--primary-lime);
+}
+
+.greska {
+    border: 1px solid #ff4d4d;
+    background-color: rgba(255, 77, 77, 0.1);
+    color: #ff4d4d;
+}
+
+/* --- Lista Termina / Raspored --- */
+.date-picker {
+    margin-bottom: 24px;
+}
+
+.appointments-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.appointment-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 18px;
+    border-radius: 18px;
+    background-color: var(--input-bg);
+    border: 1px solid var(--card-border);
+    transition: border-color 0.2s;
+}
+
+.appointment-item:hover {
+    border-color: rgba(204, 255, 0, 0.4);
+}
+
+/* Vremenski tag u neonskom stilu */
+.time-box {
+    font-size: 13px;
+    color: var(--primary-lime);
+    background: rgba(204, 255, 0, 0.08);
+    border: 1px solid rgba(204, 255, 0, 0.2);
+    padding: 6px 12px;
+    border-radius: 100px;
+    font-weight: 700;
+}
+
+.client-info h4 {
+    margin: 0 0 4px 0;
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--text-color);
+}
+
+.client-info p {
+    margin: 0;
+    color: var(--text-muted);
+    font-size: 13px;
+}
+
+.worker-info {
+    font-weight: 600;
+    font-size: 13px;
+    color: var(--primary-lime);
+}
+
+/* Responsiveness za manji ekran */
+@media (max-width: 900px) {
+    .dashboard-container {
+        grid-template-columns: 1fr;
+    }
+}
+
+
+/* Dodatno ulepšavanje pojedinačnog termina u rasporedu */
+.appointment-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 20px;
+    border-radius: 20px;
+    background-color: var(--input-bg);
+    border: 1px solid var(--card-border);
+    transition: all 0.2s ease;
+}
+
+.appointment-item:hover {
+    border-color: var(--primary-lime);
+    transform: translateX(4px); /* Blagi pomak udesno na hover */
+}
+
+.client-info h4 {
+    margin: 0 0 4px 0;
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--text-color);
+}
+
+.client-info p {
+    margin: 0;
+    color: var(--text-muted);
+    font-size: 13px;
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+/* Bedž sa imenom radnika */
+.worker-badge {
+    font-size: 12px;
+    font-weight: 700;
+    color: #000;
+    background-color: var(--primary-lime);
+    padding: 4px 10px;
+    border-radius: 100px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}

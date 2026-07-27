@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="sr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zakaži Termin - Dashboard</title>
+    <!-- Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <!-- Eksterni CSS -->
+    <link rel="stylesheet" href="style.css">
+    <!-- Supabase SDK -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+
+    <div class="dashboard-container">
+        
+        <!-- Forma -->
+        <div class="booking-section card">
+            <h2>Zakaži Termin</h2>
+            <form id="formaZakazivanje">
+                <div class="form-group">
+                    <label for="usluga">Usluga</label>
+                    <select id="usluga" required>
+                        <option value="">Učitavanje...</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="zaposleni">Radnik</label>
+                    <select id="zaposleni" required>
+                        <option value="">Učitavanje...</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="klijentIme">Klijent</label>
+                    <input type="text" id="klijentIme" placeholder="Unesite ime" required>
+                </div>
+                <div class="form-group">
+                    <label for="klijentTelefon">Telefon</label>
+                    <input type="tel" id="klijentTelefon" placeholder="Unesite broj" required>
+                </div>
+                <div class="form-group">
+                    <label for="datumVreme">Početak</label>
+                    <input type="datetime-local" id="datumVreme" required>
+                </div>
+                <button type="submit" id="btnPotvrdi">POTVRDI</button>
+            </form>
+            <div id="poruka"></div>
+        </div>
+
+        <!-- Raspored -->
+        <div class="schedule-section card">
+            <h2>Raspored</h2>
+            <div class="date-picker">
+                <input type="date" id="izaberiDatum">
+            </div>
+            <div class="appointments-list" id="listaTermina">
+                <p>Učitavanje termina...</p>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Eksterni JS -->
+    <script src="app.js"></script>
+</body>
+</html>

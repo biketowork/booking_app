@@ -153,14 +153,19 @@ body {
 }
 
 .calendar-day {
-  padding: 10px 0;
+  padding: 8px 0;
   font-size: 13px;
   font-weight: 500;
   border-radius: 8px;
   cursor: pointer;
   color: #cbd5e1;
   transition: all 0.2s ease;
-  position: relative;
+  border: 1px solid transparent;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
 }
 
 .calendar-day:hover:not(.empty) {
@@ -168,6 +173,7 @@ body {
   color: #22c55e;
 }
 
+/* Slobodan izabran dan (Zeleni) */
 .calendar-day.active {
   background: #22c55e;
   color: #0f172a;
@@ -175,18 +181,33 @@ body {
   box-shadow: 0 0 12px rgba(34, 197, 94, 0.4);
 }
 
-.calendar-day.has-events::after {
-  content: '';
-  display: block;
-  width: 6px;
-  height: 6px;
-  background: #22c55e;
-  border-radius: 50%;
-  margin: 3px auto 0;
+/* CRVENI TAB ZA ZAUZETE DANE U KALENDARU */
+.calendar-day.is-reserved {
+  background: rgba(239, 68, 68, 0.15);
+  color: #f87171;
+  border: 1px solid rgba(239, 68, 68, 0.4);
+  font-weight: 700;
 }
 
-.calendar-day.active.has-events::after {
-  background: #0f172a;
+.calendar-day.is-reserved:hover {
+  background: rgba(239, 68, 68, 0.3);
+  color: #fca5a5;
+  border-color: #ef4444;
+}
+
+.calendar-day.is-reserved::after {
+  content: '🚗';
+  font-size: 9px;
+  line-height: 1;
+  margin-top: 2px;
+}
+
+/* Kada je izabran zauzet dan (Pun crveni sjaj) */
+.calendar-day.active.is-reserved {
+  background: #ef4444;
+  color: #ffffff;
+  border-color: #f87171;
+  box-shadow: 0 0 12px rgba(239, 68, 68, 0.5);
 }
 
 .calendar-day.empty {
@@ -202,7 +223,7 @@ body {
   border: 1px solid #334155;
   padding: 16px;
   border-radius: 12px;
-  border-left: 4px solid #22c55e;
+  border-left: 4px solid #ef4444;
 }
 
 .car-badge {
@@ -237,9 +258,9 @@ body {
   font-weight: 600;
   padding: 4px 10px;
   border-radius: 20px;
-  background: rgba(34, 197, 94, 0.2);
-  color: #4ade80;
-  border: 1px solid rgba(34, 197, 94, 0.3);
+  background: rgba(239, 68, 68, 0.2);
+  color: #f87171;
+  border: 1px solid rgba(239, 68, 68, 0.3);
 }
 
 .no-data {
@@ -298,21 +319,21 @@ body {
 }
 
 .mini-tab:hover {
-  border-color: #22c55e;
+  border-color: #ef4444;
   background: #1e293b;
   transform: translateY(-1px);
 }
 
 .mini-tab.active-tab {
-  border-color: #22c55e;
-  background: rgba(34, 197, 94, 0.15);
-  color: #4ade80;
+  border-color: #ef4444;
+  background: rgba(239, 68, 68, 0.15);
+  color: #f87171;
 }
 
 .mini-tab .tab-status {
   font-size: 10px;
   color: #ef4444;
-  background: rgba(239, 68, 68, 0.15);
+  background: rgba(239, 68, 68, 0.2);
   padding: 2px 6px;
   border-radius: 10px;
   margin-left: 2px;

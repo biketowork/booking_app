@@ -11,30 +11,32 @@ const carReservations = {
 function selectDate(day) {
   currentSelectedDay = day;
 
-  // 1. Osveži selekciju u kalendaru i dodaj tačkice na zauzete dane
+  // 1. Osveži selekciju u kalendaru i obeleži zauzete dane crvenim tabom
   const allDays = document.querySelectorAll('.calendar-day:not(.empty)');
   allDays.forEach(el => {
     const dayNum = parseInt(el.textContent);
     
+    // Provera da li je trenutno selektovan dan
     if (dayNum === day) {
       el.classList.add('active');
     } else {
       el.classList.remove('active');
     }
 
+    // Provera da li je dan zauzet
     if (carReservations[dayNum]) {
-      el.classList.add('has-events');
+      el.classList.add('is-reserved');
     } else {
-      el.classList.remove('has-events');
+      el.classList.remove('is-reserved');
     }
   });
 
-  // 2. Osveži svetle ikonice
+  // 2. Osveži svetle ikonice na 2026. godinu
   document.getElementById('left-icon-day').textContent = day;
   document.getElementById('right-icon-day').textContent = day;
   document.getElementById('selected-date-text').textContent = `${day}. Jul 2026.`;
 
-  // 3. Prikazi detalje i osveži sitne tabove
+  // 3. Prikaži detalje i osveži sitne tabove sa desne strane
   renderReservation(day);
   renderReservedTabs();
 }
@@ -67,7 +69,6 @@ function renderReservedTabs() {
   const container = document.getElementById('reserved-tabs-container');
   container.innerHTML = '';
 
-  // Dobijamo sve dane koji imaju rezervaciju i sortiramo ih rastuće
   const reservedDays = Object.keys(carReservations).map(Number).sort((a, b) => a - b);
 
   if (reservedDays.length === 0) {
@@ -109,7 +110,7 @@ function confirmReservation() {
     return;
   }
 
-  // Dodaj ili promeni rezervaciju za selektovani dan
+  // Dodaj rezervaciju
   carReservations[currentSelectedDay] = {
     person: nameInput,
     car: 'Škoda Octavia',
@@ -117,7 +118,7 @@ function confirmReservation() {
   };
 
   closeModal();
-  selectDate(currentSelectedDay); // Osvežava kalendar, karticu i sitne tabove
+  selectDate(currentSelectedDay); // Osvežava kalendar i tabove
 }
 
 // Inicijalno učitavanje

@@ -63,7 +63,7 @@
         <div class="calendar-day" onclick="selectDate(24)">24</div>
         <div class="calendar-day" onclick="selectDate(25)">25</div>
         <div class="calendar-day" onclick="selectDate(26)">26</div>
-        <div class="calendar-day active" onclick="selectDate(27)">27</div>
+        <div class="calendar-day" onclick="selectDate(27)">27</div>
         <div class="calendar-day" onclick="selectDate(28)">28</div>
         <div class="calendar-day" onclick="selectDate(29)">29</div>
         <div class="calendar-day" onclick="selectDate(30)">30</div>
@@ -71,7 +71,7 @@
       </div>
     </div>
 
-    <!-- DESNA STRANA: Prikaz izabranog dana + Sitni tabovi rezervacija -->
+    <!-- DESNA STRANA: Prikaz izabranog dana + Sitni tabovi -->
     <div class="right-side">
       <div class="section-header">
         <div class="date-badge">
@@ -89,18 +89,14 @@
       </div>
 
       <!-- Kartica za trenutno izabrani dan -->
-      <div id="appointments-container">
-        <!-- JS dinamicki ubacuje detalje selektovanog dana -->
-      </div>
+      <div id="appointments-container"></div>
 
       <div class="section-divider"></div>
 
       <!-- Lista zauzetih dana u mesecu (sitni tabovi) -->
       <div class="reserved-tabs-section">
         <div class="section-title">Zauzeti dani ovog meseca (Škoda Octavia)</div>
-        <div class="reserved-tabs-grid" id="reserved-tabs-container">
-          <!-- JS ubacuje sitne tabove sa auticem -->
-        </div>
+        <div class="reserved-tabs-grid" id="reserved-tabs-container"></div>
       </div>
     </div>
 
@@ -128,6 +124,6 @@
     </div>
   </div>
 
-  <script src="app.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>

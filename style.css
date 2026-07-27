@@ -1,252 +1,262 @@
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
-
-:root {
-    /* Boje inspirisane dizajnom sa slike */
-    --bg-color: #0d0f0d;            /* Skoro crna, mat pozadina */
-    --card-bg: #181a18;          /* Tamno sivo/zelenkasta kartica */
-    --card-border: #232723;      /* Diskretna granica kartica */
-    --input-bg: #111311;         /* Unutrašnjost input polja */
-    
-    --primary-lime: #ccff00;     /* Ultra neonska lime-zelena boja */
-    --lime-hover: #b8e600;       /* Tamnija lime za hover efekat */
-    
-    --text-color: #ffffff;       /* Bela za naslove i glavno čitanje */
-    --text-muted: #8b928b;      /* Mute siva za opise i labele */
-    --font-main: 'Plus Jakarta Sans', sans-serif;
+/* Globalni reset i osnovni stilovi */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
 }
 
 body {
-    font-family: var(--font-main);
-    background-color: var(--bg-color);
-    color: var(--text-color);
-    margin: 0;
-    padding: 0;
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
-    min-height: 100vh;
+  background-color: #f1f5f9;
+  color: #0f172a;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 20px;
 }
 
-.dashboard-container {
-    width: 100%;
-    max-width: 1400px;
-    padding: 24px;
-    display: grid;
-    grid-template-columns: 380px 1fr;
-    grid-gap: 24px;
+/* Glavni kontejner */
+.app-container {
+  display: flex;
+  flex-direction: row;
+  gap: 24px;
+  background: #ffffff;
+  padding: 28px;
+  border-radius: 20px;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.01);
+  max-width: 900px;
+  width: 100%;
 }
 
-/* --- Mat Tamne Kartice Sa Ekstra Zaobljenim Uglovima --- */
-.card {
-    background-color: var(--card-bg);
-    border: 1px solid var(--card-border);
-    border-radius: 24px; /* Veći radijus kao na telefonu sa slike */
-    padding: 28px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+/* Léva i desna kolona */
+.left-side {
+  flex: 1;
+  border-right: 1px solid #f1f5f9;
+  padding-right: 24px;
 }
 
-/* --- Naslovi --- */
-.booking-section h2, .schedule-section h2 {
-    font-size: 22px;
-    font-weight: 800;
-    letter-spacing: -0.5px;
-    margin-top: 0;
-    margin-bottom: 20px;
-    color: var(--text-color);
+.right-side {
+  flex: 1.2;
+  display: flex;
+  flex-direction: column;
 }
 
-/* --- Forma i Inputi --- */
-.form-group {
-    margin-bottom: 18px;
+/* Svetla ikonica za datum */
+.date-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  padding: 8px 16px;
+  border-radius: 12px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
 }
 
-label {
-    display: block;
-    margin-bottom: 8px;
-    color: var(--text-muted);
-    font-size: 13px;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
+.date-badge .icon-box {
+  width: 38px;
+  height: 42px;
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  position: relative;
 }
 
-select, input {
-    width: 100%;
-    padding: 14px 18px;
-    border: 1px solid var(--card-border);
-    border-radius: 16px;
-    background-color: var(--input-bg);
-    color: var(--text-color);
-    font-size: 15px;
-    font-weight: 500;
-    box-sizing: border-box;
-    transition: all 0.2s ease;
+.date-badge .icon-box::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 10px;
+  background: #38bdf8; /* Svetlo plava traka na vrhu ikonice */
 }
 
-select:focus, input:focus {
-    outline: none;
-    border-color: var(--primary-lime);
+.date-badge .icon-box .year-text {
+  font-size: 8px;
+  font-weight: 700;
+  color: #0369a1;
+  margin-top: 8px;
+  line-height: 1;
 }
 
-/* --- Stilizacija Dropdown Opcija --- */
-select option {
-    background-color: #181a18;
-    color: #ffffff;
-    padding: 12px;
+.date-badge .icon-box .day-text {
+  font-size: 14px;
+  font-weight: 700;
+  color: #0f172a;
+  line-height: 1;
+  margin-top: 2px;
 }
 
-input::placeholder {
-    color: var(--text-muted);
+.date-badge .details {
+  display: flex;
+  flex-direction: column;
 }
 
-/* --- Neonsko Lime Dugme (Kao "Start Workout" na slici) --- */
-button#btnPotvrdi {
-    width: 100%;
-    padding: 16px;
-    border: none;
-    border-radius: 100px; /* Pilula oblik kao na dnu desnog telefona */
-    background-color: var(--primary-lime);
-    color: #000000; /* Crni tekst na neonskoj pozadini za jak kontrast */
-    font-size: 16px;
-    font-weight: 800;
-    letter-spacing: 0.3px;
-    cursor: pointer;
-    margin-top: 10px;
-    transition: transform 0.2s, background-color 0.2s;
+.date-badge .details .label {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: #64748b;
+  font-weight: 600;
 }
 
-button#btnPotvrdi:hover {
-    background-color: var(--lime-hover);
-    transform: translateY(-2px);
+.date-badge .details .value {
+  font-size: 14px;
+  font-weight: 600;
+  color: #1e293b;
 }
 
-/* --- Poruke o Statusu --- */
-#poruka {
-    margin-top: 20px;
-    padding: 12px;
-    border-radius: 12px;
-    text-align: center;
-    font-weight: 600;
-    display: none;
+/* Header sekcija */
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
 }
 
-.uspeh {
-    border: 1px solid var(--primary-lime);
-    background-color: rgba(204, 255, 0, 0.1);
-    color: var(--primary-lime);
+/* Kalendar grid */
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 6px;
+  text-align: center;
+  margin-top: 15px;
 }
 
-.greska {
-    border: 1px solid #ff4d4d;
-    background-color: rgba(255, 77, 77, 0.1);
-    color: #ff4d4d;
+.calendar-day-head {
+  font-size: 12px;
+  font-weight: 600;
+  color: #94a3b8;
+  padding-bottom: 6px;
 }
 
-/* --- Lista Termina / Raspored --- */
-.date-picker {
-    margin-bottom: 24px;
+.calendar-day {
+  padding: 10px 0;
+  font-size: 13px;
+  font-weight: 500;
+  border-radius: 8px;
+  cursor: pointer;
+  color: #334155;
+  transition: all 0.2s ease;
 }
 
+.calendar-day:hover:not(.empty) {
+  background: #f1f5f9;
+}
+
+.calendar-day.active {
+  background: #0284c7;
+  color: #ffffff;
+  font-weight: 700;
+  box-shadow: 0 4px 6px -1px rgba(2, 132, 199, 0.3);
+}
+
+.calendar-day.has-events::after {
+  content: '';
+  display: block;
+  width: 4px;
+  height: 4px;
+  background: #0284c7;
+  border-radius: 50%;
+  margin: 2px auto 0;
+}
+
+.calendar-day.active.has-events::after {
+  background: #ffffff;
+}
+
+.calendar-day.empty {
+  cursor: default;
+}
+
+/* Desna strana - lista termina po danima */
 .appointments-list {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 10px;
+  overflow-y: auto;
+  max-height: 320px;
+  padding-right: 4px;
 }
 
-.appointment-item {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 18px;
-    border-radius: 18px;
-    background-color: var(--input-bg);
-    border: 1px solid var(--card-border);
-    transition: border-color 0.2s;
+.appointment-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  padding: 12px 16px;
+  border-radius: 12px;
+  transition: transform 0.15s ease;
 }
 
-.appointment-item:hover {
-    border-color: rgba(204, 255, 0, 0.4);
+.appointment-card:hover {
+  transform: translateY(-1px);
+  border-color: #cbd5e1;
 }
 
-/* Vremenski tag u neonskom stilu */
 .time-box {
-    font-size: 13px;
-    color: var(--primary-lime);
-    background: rgba(204, 255, 0, 0.08);
-    border: 1px solid rgba(204, 255, 0, 0.2);
-    padding: 6px 12px;
-    border-radius: 100px;
-    font-weight: 700;
+  font-weight: 700;
+  font-size: 13px;
+  color: #0284c7;
+  background: #e0f2fe;
+  padding: 6px 10px;
+  border-radius: 8px;
 }
 
-.client-info h4 {
-    margin: 0 0 4px 0;
-    font-size: 16px;
-    font-weight: 700;
-    color: var(--text-color);
+.info-box {
+  flex: 1;
+  margin: 0 16px;
 }
 
-.client-info p {
-    margin: 0;
-    color: var(--text-muted);
-    font-size: 13px;
+.info-box .title {
+  font-size: 14px;
+  font-weight: 600;
+  color: #0f172a;
 }
 
-.worker-info {
-    font-weight: 600;
-    font-size: 13px;
-    color: var(--primary-lime);
+.info-box .subtitle {
+  font-size: 12px;
+  color: #64748b;
 }
 
-/* Responsiveness za manji ekran */
-@media (max-width: 900px) {
-    .dashboard-container {
-        grid-template-columns: 1fr;
-    }
+.status-pill {
+  font-size: 11px;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 20px;
+  background: #dcfce7;
+  color: #166534;
 }
 
-
-/* Dodatno ulepšavanje pojedinačnog termina u rasporedu */
-.appointment-item {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 16px 20px;
-    border-radius: 20px;
-    background-color: var(--input-bg);
-    border: 1px solid var(--card-border);
-    transition: all 0.2s ease;
+.status-pill.pending {
+  background: #fef9c3;
+  color: #854d0e;
 }
 
-.appointment-item:hover {
-    border-color: var(--primary-lime);
-    transform: translateX(4px); /* Blagi pomak udesno na hover */
+.no-data {
+  text-align: center;
+  color: #94a3b8;
+  font-size: 14px;
+  margin-top: 40px;
 }
 
-.client-info h4 {
-    margin: 0 0 4px 0;
-    font-size: 15px;
-    font-weight: 700;
-    color: var(--text-color);
-}
-
-.client-info p {
-    margin: 0;
-    color: var(--text-muted);
-    font-size: 13px;
-    display: flex;
-    gap: 8px;
-    align-items: center;
-}
-
-/* Bedž sa imenom radnika */
-.worker-badge {
-    font-size: 12px;
-    font-weight: 700;
-    color: #000;
-    background-color: var(--primary-lime);
-    padding: 4px 10px;
-    border-radius: 100px;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
+/* Responsivnost za mobilne ekrane */
+@media (max-width: 768px) {
+  .app-container {
+    flex-direction: column;
+  }
+  .left-side {
+    border-right: none;
+    border-bottom: 1px solid #f1f5f9;
+    padding-right: 0;
+    padding-bottom: 24px;
+  }
 }

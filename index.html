@@ -3,59 +3,94 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Zakazivanje Termina</title>
+  <title>Zakazivanje Termina 2026</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-  <div class="dashboard-container">
+  <div class="app-container">
     
-    <!-- LEVA STRANA: Forma za zakazivanje -->
-    <div class="card booking-section">
-      <h2>Zakaži Termin</h2>
-      
-      <form id="bookingForm">
-        <div class="form-group">
-          <label for="name">Ime i Prezime</label>
-          <input type="text" id="name" placeholder="Unesite ime i prezime" required>
+    <!-- LEVA STRANA: Kalendar & Svetla Ikonica 1 -->
+    <div class="left-side">
+      <div class="section-header">
+        <div class="date-badge">
+          <div class="icon-box">
+            <span class="year-text">2026</span>
+            <span class="day-text" id="left-icon-day">27</span>
+          </div>
+          <div class="details">
+            <span class="label">Godina 2026.</span>
+            <span class="value" id="left-icon-month">Jul 2026</span>
+          </div>
         </div>
+      </div>
 
-        <div class="form-group">
-          <label for="service">Usluga</label>
-          <input type="text" id="service" placeholder="Npr. Šišanje, Masaža..." required>
-        </div>
+      <!-- Kalendar Grid -->
+      <div class="calendar-grid">
+        <div class="calendar-day-head">P</div>
+        <div class="calendar-day-head">U</div>
+        <div class="calendar-day-head">S</div>
+        <div class="calendar-day-head">Č</div>
+        <div class="calendar-day-head">P</div>
+        <div class="calendar-day-head">S</div>
+        <div class="calendar-day-head">N</div>
+        
+        <!-- Prazna polja (Jul 2026 počinje u sredu) -->
+        <div class="calendar-day empty"></div>
+        <div class="calendar-day empty"></div>
 
-        <div class="form-group">
-          <label for="worker">Radnik</label>
-          <select id="worker">
-            <option value="Uros">Uroš</option>
-            <option value="Marko">Marko</option>
-            <option value="Ana">Ana</option>
-          </select>
-        </div>
-
-        <div class="form-group">
-          <label for="date">Datum</label>
-          <input type="date" id="date" required>
-        </div>
-
-        <div class="form-group">
-          <label for="time">Vreme</label>
-          <input type="time" id="time" required>
-        </div>
-
-        <button type="submit" id="btnPotvrdi">Potvrdi i Zakaži</button>
-      </form>
-
-      <div id="poruka"></div>
+        <!-- Dani u mesecu -->
+        <div class="calendar-day" onclick="selectDate(1)">1</div>
+        <div class="calendar-day" onclick="selectDate(2)">2</div>
+        <div class="calendar-day" onclick="selectDate(3)">3</div>
+        <div class="calendar-day" onclick="selectDate(4)">4</div>
+        <div class="calendar-day" onclick="selectDate(5)">5</div>
+        <div class="calendar-day" onclick="selectDate(6)">6</div>
+        <div class="calendar-day" onclick="selectDate(7)">7</div>
+        <div class="calendar-day" onclick="selectDate(8)">8</div>
+        <div class="calendar-day" onclick="selectDate(9)">9</div>
+        <div class="calendar-day" onclick="selectDate(10)">10</div>
+        <div class="calendar-day" onclick="selectDate(11)">11</div>
+        <div class="calendar-day" onclick="selectDate(12)">12</div>
+        <div class="calendar-day" onclick="selectDate(13)">13</div>
+        <div class="calendar-day" onclick="selectDate(14)">14</div>
+        <div class="calendar-day" onclick="selectDate(15)">15</div>
+        <div class="calendar-day" onclick="selectDate(16)">16</div>
+        <div class="calendar-day" onclick="selectDate(17)">17</div>
+        <div class="calendar-day" onclick="selectDate(18)">18</div>
+        <div class="calendar-day" onclick="selectDate(19)">19</div>
+        <div class="calendar-day" onclick="selectDate(20)">20</div>
+        <div class="calendar-day" onclick="selectDate(21)">21</div>
+        <div class="calendar-day" onclick="selectDate(22)">22</div>
+        <div class="calendar-day" onclick="selectDate(23)">23</div>
+        <div class="calendar-day" onclick="selectDate(24)">24</div>
+        <div class="calendar-day" onclick="selectDate(25)">25</div>
+        <div class="calendar-day" onclick="selectDate(26)">26</div>
+        <div class="calendar-day active has-events" onclick="selectDate(27)">27</div>
+        <div class="calendar-day has-events" onclick="selectDate(28)">28</div>
+        <div class="calendar-day" onclick="selectDate(29)">29</div>
+        <div class="calendar-day" onclick="selectDate(30)">30</div>
+        <div class="calendar-day" onclick="selectDate(31)">31</div>
+      </div>
     </div>
 
-    <!-- DESNA STRANA: Raspored i lista termina -->
-    <div class="card schedule-section">
-      <h2>Zakazani Termini</h2>
-      
-      <div class="appointments-list" id="appointmentsList">
-        <p class="empty-msg" style="color: var(--text-muted);">Trenutno nema zakazanih termina.</p>
+    <!-- DESNA STRANA: Svetla Ikonica 2 & Zakazani Termini -->
+    <div class="right-side">
+      <div class="section-header">
+        <div class="date-badge">
+          <div class="icon-box">
+            <span class="year-text">2026</span>
+            <span class="day-text" id="right-icon-day">27</span>
+          </div>
+          <div class="details">
+            <span class="label">Zakazano za:</span>
+            <span class="value" id="selected-date-text">27. Jul 2026.</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="appointments-list" id="appointments-container">
+        <!-- JS dinamički puni termine -->
       </div>
     </div>
 

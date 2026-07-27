@@ -10,7 +10,7 @@
 
   <div class="app-container">
     
-    <!-- LEVA STRANA: Kalendar & Svetla Ikonica 1 -->
+    <!-- LEVA STRANA: Kalendar -->
     <div class="left-side">
       <div class="section-header">
         <div class="date-badge">
@@ -71,7 +71,7 @@
       </div>
     </div>
 
-    <!-- DESNA STRANA: Svetla Ikonica 2 & Rezervacija Automobila -->
+    <!-- DESNA STRANA: Prikaz izabranog dana + Sitni tabovi rezervacija -->
     <div class="right-side">
       <div class="section-header">
         <div class="date-badge">
@@ -80,17 +80,27 @@
             <span class="day-text" id="right-icon-day">27</span>
           </div>
           <div class="details">
-            <span class="label">Rezervacija za:</span>
+            <span class="label">Status za:</span>
             <span class="value" id="selected-date-text">27. Jul 2026.</span>
           </div>
         </div>
 
-        <!-- Dugme za otvaranje forme -->
         <button class="btn-reserve" onclick="openModal()">+ Dodaj rezervaciju</button>
       </div>
 
-      <div class="appointments-list" id="appointments-container">
-        <!-- JS dinamicki ubacuje rezervacije -->
+      <!-- Kartica za trenutno izabrani dan -->
+      <div id="appointments-container">
+        <!-- JS dinamicki ubacuje detalje selektovanog dana -->
+      </div>
+
+      <div class="section-divider"></div>
+
+      <!-- Lista zauzetih dana u mesecu (sitni tabovi) -->
+      <div class="reserved-tabs-section">
+        <div class="section-title">Zauzeti dani ovog meseca (Škoda Octavia)</div>
+        <div class="reserved-tabs-grid" id="reserved-tabs-container">
+          <!-- JS ubacuje sitne tabove sa auticem -->
+        </div>
       </div>
     </div>
 

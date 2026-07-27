@@ -250,21 +250,3 @@ button#btnPotvrdi:hover {
     text-transform: uppercase;
     letter-spacing: 0.5px;
 }
-.container {
-  display: flex;
-  gap: 30px;
-  align-items: flex-start;
-}
-
-.left-column, .right-column {
-  flex: 1;
-}
-
-/* Osnovni stil za karticu zakazanog termina sa desne strane */
-.appointment-card {
-  padding: 12px 15px;
-  margin-bottom: 10px;
-  border-radius: 6px;
-  border-left: 4px solid #3182ce;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-}

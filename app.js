@@ -93,6 +93,13 @@ function renderReservedTabs() {
 
 // Modal Kontrole
 function openModal() {
+  // Provera pre otvaranja modala - obaveštenje ako je dan već zauzet
+  if (carReservations[currentSelectedDay]) {
+    const existingPerson = carReservations[currentSelectedDay].person;
+    alert(`Ovaj datum (${currentSelectedDay}. Jul) je već rezervisao/la ${existingPerson}. Nije moguće izvršiti novu rezervaciju za isti dan.`);
+    return;
+  }
+
   document.getElementById('person-name').value = '';
   document.getElementById('modal').style.display = 'flex';
 }
@@ -101,7 +108,7 @@ function closeModal() {
   document.getElementById('modal').style.display = 'none';
 }
 
-// Potvrda rezervacije
+// Potvrda rezervacije uz proveru zauzetosti
 function confirmReservation() {
   const nameInput = document.getElementById('person-name').value.trim();
 
@@ -110,7 +117,14 @@ function confirmReservation() {
     return;
   }
 
-  // Dodaj rezervaciju
+  // Sigurnosna provera pre čuvanja (da sprreči pregazivanje)
+  if (carReservations[currentSelectedDay]) {
+    alert(`Greška: Automobil je već rezervisao ${carReservations[currentSelectedDay].person} za ovaj datum.`);
+    closeModal();
+    return;
+  }
+
+  // Ako je dan slobodan, čuva se nova rezervacija
   carReservations[currentSelectedDay] = {
     person: nameInput,
     car: 'Škoda Octavia',
@@ -118,7 +132,7 @@ function confirmReservation() {
   };
 
   closeModal();
-  selectDate(currentSelectedDay); // Osvežava kalendar i tabove
+  selectDate(currentSelectedDay); // Osvežava kalendar, karticu i tabove
 }
 
 // Inicijalno učitavanje

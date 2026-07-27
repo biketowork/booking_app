@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Zakazivanje Termina 2026</title>
+  <title>Rezervacija Automobila 2026</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -63,15 +63,15 @@
         <div class="calendar-day" onclick="selectDate(24)">24</div>
         <div class="calendar-day" onclick="selectDate(25)">25</div>
         <div class="calendar-day" onclick="selectDate(26)">26</div>
-        <div class="calendar-day active has-events" onclick="selectDate(27)">27</div>
-        <div class="calendar-day has-events" onclick="selectDate(28)">28</div>
+        <div class="calendar-day active" onclick="selectDate(27)">27</div>
+        <div class="calendar-day" onclick="selectDate(28)">28</div>
         <div class="calendar-day" onclick="selectDate(29)">29</div>
         <div class="calendar-day" onclick="selectDate(30)">30</div>
         <div class="calendar-day" onclick="selectDate(31)">31</div>
       </div>
     </div>
 
-    <!-- DESNA STRANA: Svetla Ikonica 2 & Zakazani Termini -->
+    <!-- DESNA STRANA: Svetla Ikonica 2 & Rezervacija Automobila -->
     <div class="right-side">
       <div class="section-header">
         <div class="date-badge">
@@ -80,17 +80,42 @@
             <span class="day-text" id="right-icon-day">27</span>
           </div>
           <div class="details">
-            <span class="label">Zakazano za:</span>
+            <span class="label">Rezervacija za:</span>
             <span class="value" id="selected-date-text">27. Jul 2026.</span>
           </div>
         </div>
+
+        <!-- Dugme za otvaranje forme -->
+        <button class="btn-reserve" onclick="openModal()">+ Dodaj rezervaciju</button>
       </div>
 
       <div class="appointments-list" id="appointments-container">
-        <!-- JS dinamički puni kartice -->
+        <!-- JS dinamicki ubacuje rezervacije -->
       </div>
     </div>
 
+  </div>
+
+  <!-- MODAL ZA REZERVISANJE -->
+  <div class="modal-overlay" id="modal">
+    <div class="modal-content">
+      <h3>Rezervacija firminog automobila</h3>
+      
+      <div class="form-group">
+        <label>Izabrani auto:</label>
+        <input type="text" value="Škoda Octavia" disabled class="disabled-input">
+      </div>
+
+      <div class="form-group">
+        <label>Ime i prezime zaposlenog:</label>
+        <input type="text" id="person-name" placeholder="npr. Uroš Vuletić">
+      </div>
+
+      <div class="modal-actions">
+        <button class="btn-cancel" onclick="closeModal()">Otkaži</button>
+        <button class="btn-confirm" onclick="confirmReservation()">Potvrdi</button>
+      </div>
+    </div>
   </div>
 
   <script src="app.js"></script>

@@ -1,99 +1,119 @@
-// Tvoj API Ključ (ovde unesi svoj ključ)
+// Tvoj Supabase API Ključ i URL
 const API_KEY = 'sb_publishable_n632u0RA4VD8UumfXRNiPQ_Z3dADR5G';
-const API_URL = 'https://jartbatdbxckaxwursae.supabase.co/rest/v1/appointments'; // Opciono: Putanja do tvog API backend-a
+const API_URL = 'https://jartbatdbxckaxwursae.supabase.co/rest/v1/appointments';
 
 document.addEventListener('DOMContentLoaded', () => {
   const bookingForm = document.getElementById('bookingForm');
-  const appointmentsList = document.getElementById('appointmentsList');
+  const appointmentsList = document.querySelector('.appointments-list') || document.getElementById('appointmentsList');
 
-  bookingForm.addEventListener('submit', function(e) {
+  if (!bookingForm) return;
+
+  bookingForm.addEventListener('submit', async function(e) {
     e.preventDefault();
 
     // 1. Prikupljanje vrednosti iz forme
-    const name = document.getElementById('name').value;
-    const service = document.getElementById('service').value;
-    const date = document.getElementById('date').value;
-    const time = document.getElementById('time').value;
+    const clientName = document.getElementById('name')?.value || 'Nenavedeno ime';
+    const service = document.getElementById('service')?.value || 'Usluga';
+    const date = document.getElementById('date')?.value || '';
+    const time = document.getElementById('time')?.value || '';
+    const worker = document.getElementById('worker')?.value || 'Radnik';
 
-    // Struktura objekta termina
+    // Objekat za UI i bazu
     const newAppointment = {
       id: Date.now(),
-      name: name,
+      name: clientName,
       service: service,
       date: date,
-      time: time
+      time: time,
+      worker: worker
     };
 
-    // 2. Dodavanje kartice na desnu stranu
+    // 2. Odmah prikaži karticu u tvojim neonskim stilovima sa desne strane
     addAppointmentToUI(newAppointment);
 
-    // 3. Opciono: Slanje na API servis sa API ključem
-    /*
-    sendToApi(newAppointment);
-    */
+    // 3. Pošalji podatke u Supabase bazu
+    await sendToApi(newAppointment);
 
-    // 4. Resetovanje forme
+    // 4. Resetuj formu i prikaži poruku ako postoji
     bookingForm.reset();
+    
+    const poruka = document.getElementById('poruka');
+    if (poruka) {
+      poruka.className = 'uspeh';
+      poruka.innerText = 'Termin uspešno zakazan!';
+      poruka.style.display = 'block';
+      setTimeout(() => { poruka.style.display = 'none'; }, 3000);
+    }
   });
 
-  // Funkcija za prikaz zakazanog termina na desnoj strani
+  // Funkcija za prikaz zakazanog termina po tvom neonskom CSS dizajnu
   function addAppointmentToUI(appointment) {
+    if (!appointmentsList) return;
+
     // Skloni poruku da nema termina ako postoji
     const emptyMsg = appointmentsList.querySelector('.empty-msg');
     if (emptyMsg) {
       emptyMsg.remove();
     }
 
-    // Kreiramo kontejner kartice
-    const card = document.createElement('div');
-    card.className = 'appointment-card';
-    card.setAttribute('data-id', appointment.id);
+    const formattedDate = appointment.date 
+      ? new Date(appointment.date).toLocaleDateString('sr-RS') 
+      : '';
 
-    // Formatiranje datuma u naš format (DD.MM.YYYY)
-    const formattedDate = new Date(appointment.date).toLocaleDateString('sr-RS');
+    // Kreiramo element sa tvom .appointment-item klasom
+    const item = document.createElement('div');
+    item.className = 'appointment-item';
+    item.setAttribute('data-id', appointment.id);
 
-    card.innerHTML = `
-      <div class="appointment-info">
-        <h3>${appointment.name}</h3>
-        <p>📋 ${appointment.service}</p>
+    item.innerHTML = `
+      <div class="client-info">
+        <h4>${appointment.name}</h4>
+        <p>📋 ${appointment.service} ${formattedDate ? '• 📅 ' + formattedDate : ''}</p>
       </div>
-      <div class="appointment-time">
-        <div>📅 ${formattedDate}</div>
-        <div>🕒 ${appointment.time} h</div>
-        <button class="delete-btn" onclick="removeAppointment(this)">Otkaži</button>
+      <div style="display: flex; align-items: center; gap: 10px;">
+        <span class="worker-badge">${appointment.worker}</span>
+        <span class="time-box">🕒 ${appointment.time}</span>
+        <button onclick="removeAppointment(this)" style="background:none; border:none; color:#ff4d4d; cursor:pointer; font-weight:700; margin-left:8px;">✕</button>
       </div>
     `;
 
-    appointmentsList.prepend(card);
+    appointmentsList.prepend(item);
   }
 
-  // Primer funkcije za slanje na externi API servis
+  // Funkcija za slanje u Supabase bazu
   async function sendToApi(data) {
     try {
       const response = await fetch(API_URL, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${API_KEY}` // Slanje API ključa u zaglavlju
+          'apikey': API_KEY,
+          'Authorization': `Bearer ${API_KEY}`,
+          'Prefer': 'return=minimal'
         },
         body: JSON.stringify(data)
       });
       
-      const result = await response.json();
-      console.log('Uspešno poslato na API:', result);
+      if (!response.ok) {
+        throw new Error(`Server odgovorio sa statusom: ${response.status}`);
+      }
+      
+      console.log('Uspešno upisano u Supabase bazu!');
     } catch (error) {
       console.error('Greška pri slanju na API:', error);
     }
   }
 });
 
-// Funkcija za uklanjanje termina sa liste
+// Funkcija za brisanje sa liste na klik
 function removeAppointment(button) {
-  const card = button.closest('.appointment-card');
-  card.remove();
+  const item = button.closest('.appointment-item');
+  if (item) {
+    item.remove();
+  }
 
-  const appointmentsList = document.getElementById('appointmentsList');
-  if (appointmentsList.children.length === 0) {
-    appointmentsList.innerHTML = '<p class="empty-msg">Trenutno nema zakazanih termina.</p>';
+  const appointmentsList = document.querySelector('.appointments-list') || document.getElementById('appointmentsList');
+  if (appointmentsList && appointmentsList.children.length === 0) {
+    appointmentsList.innerHTML = '<p class="empty-msg" style="color: var(--text-muted); text-align: center;">Trenutno nema zakazanih termina.</p>';
   }
 }

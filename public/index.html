@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="sr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistem za rezervacije - Škoda</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Uvoz Three.js biblioteke za animacije automobila -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" defer></script>
+    <script src="app.js" defer></script>
+</head>
+<body>
+
+    <!-- Gornja navigacija / Header -->
+    <header class="main-header">
+        <div class="header-left">
+            <h1>Upravljanje rezervacijama</h1>
+            <!-- Dugme za otvaranje bočnog menija / timeline-a -->
+            <button id="btn-toggle-sidebar" class="btn-secondary" style="margin-left: 15px;">Prikaz kalendara</button>
+        </div>
+        <div class="header-right" style="display: flex; align-items: center; gap: 10px;">
+            <div class="user-info-badge" style="display: flex; align-items: center; gap: 8px;">
+                <div id="user-avatar" class="user-avatar-circle" style="width: 32px; height: 32px; background: #d1ff50; color: #111; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold;">U</div>
+                <span id="user-display" class="user-display">Učitavanje...</span>
+            </div>
+            <button id="btn-logout" class="btn-secondary">Odjava</button>
+        </div>
+    </header>
+
+    <!-- Glavni sadržaj -->
+    <main class="main-container">
+        
+        <!-- Kalendar / Forma sekcija -->
+        <section class="card booking-section" id="booking-form-section">
+            <h2 style="display: flex; justify-content: space-between; align-items: center;">
+                <span>Nova rezervacija</span>
+                <button id="btn-cancel-edit" class="btn-secondary" style="display: none; font-size: 0.8rem; padding: 4px 8px;" onclick="cancelEdit()">Otkaži izmenu</button>
+            </h2>
+            
+            <div id="form-alert" class="alert-box" style="display: none; margin-bottom: 10px; padding: 10px; border-radius: 4px;"></div>
+
+            <form id="booking-form">
+                <div class="form-group">
+                    <label for="start_datetime">Početak rezervacije:</label>
+                    <input type="datetime-local" id="start_datetime" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="end_datetime">Završetak rezervacije:</label>
+                    <input type="datetime-local" id="end_datetime" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="note">Napomena (opciono):</label>
+                    <textarea id="note" rows="3" placeholder="Unesite razlog ili dodatne informacije..."></textarea>
+                </div>
+
+                <button type="submit" class="btn-primary" style="width: 100%;">Kreiraj rezervaciju</button>
+            </form>
+        </section>
+
+        <!-- Lista postojećih rezervacija -->
+        <section class="card list-section">
+            <h2>Aktivne rezervacije</h2>
+            <div id="reservations-list" class="reservations-list">
+                <div class="badge-item-static">Učitavanje rezervacija...</div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Bočni panel / Timeline za raspored po mesecima -->
+    <div id="sidebar-overlay" class="sidebar-overlay"></div>
+    <aside id="sidebar-timeline" class="sidebar-timeline">
+        <div class="sidebar-header" style="display: flex; justify-content: space-between; align-items: center; padding: 15px; border-bottom: 1px solid #333;">
+            <h3>Raspored i termini</h3>
+            <button id="btn-close-sidebar" class="btn-secondary" style="padding: 2px 8px;">✕</button>
+        </div>
+        <div id="timeline-container" class="timeline-container" style="padding: 15px;">
+            <p class="empty-msg">Učitavanje termina...</p>
+        </div>
+    </aside>
+
+    <!-- Globalni alert/banner za obaveštenja -->
+    <div id="alertBox" class="conflict-banner" style="display: none; position: fixed; bottom: 20px; right: 20px; z-index: 1000;"></div>
+
+    <!-- Modal za potvrdu brisanja rezervacije -->
+    <div id="delete-modal-overlay" class="modal-overlay" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); justify-content: center; align-items: center; z-index: 2000;">
+        <div class="modal-card" style="background: #1e1e1e; padding: 20px; border-radius: 8px; width: 300px; text-align: center;">
+            <h3>Brisanje rezervacije</h3>
+            <div id="delete-modal-alert" style="color: #ff4757; display: none; margin-bottom: 10px; font-size: 0.9rem;"></div>
+            <p style="margin: 15px 0;">Da li ste sigurni da želite da obrišete ovu rezervaciju?</p>
+            <div class="modal-actions" style="display: flex; gap: 10px; margin-top: 15px;">
+                <button type="button" id="btn-cancel-delete" class="btn-secondary" style="flex: 1;">Odustani</button>
+                <button type="button" id="btn-confirm-delete" class="btn-danger" style="flex: 1; background: #ff4757; color: white; border: none; padding: 10px; border-radius: 6px; cursor: pointer;">Obriši</button>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

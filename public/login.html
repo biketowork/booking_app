@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="sr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prijava / Registracija - Sistem za rezervacije</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="login-body">
+
+    <div class="login-card">
+        <h2 id="form-title">Prijava na sistem</h2>
+        <div id="login-alert" class="alert-box alert-err" style="display: none;"></div>
+
+        <form id="login-form">
+            <div class="form-group">
+                <label for="username">Korisničko ime:</label>
+                <div style="display: flex; align-items: center;">
+                    <input type="text" id="username" required autocomplete="username" placeholder="npr. pera.peric" style="border-top-right-radius: 0; border-bottom-right-radius: 0; flex: 1;">
+                    <span style="background: #333; color: #d1ff50; padding: 10px 12px; border: 1px solid #555; border-left: none; border-top-right-radius: 6px; border-bottom-right-radius: 6px; font-size: 0.9rem; font-weight: bold;">@bebakids.com</span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="password">Lozinka:</label>
+                <input type="password" id="password" required autocomplete="current-password" placeholder="Unesite lozinku">
+            </div>
+
+            <div class="form-group" id="confirm-password-group" style="display: none;">
+                <label for="confirm-password">Potvrdite lozinku:</label>
+                <input type="password" id="confirm-password" placeholder="Ponovite lozinku">
+            </div>
+
+            <button type="submit" id="submit-btn" class="btn-primary" style="width: 100%; margin-top: 5px;">Prijavi se</button>
+
+            <div style="text-align: center; margin-top: 15px;">
+                <a href="#" id="toggle-mode" style="color: #d1ff50; text-decoration: none; font-size: 0.9rem;">Nemate nalog? Registrujte se</a>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            let isLoginMode = true;
+
+            const toggleModeLink = document.getElementById('toggle-mode');
+            const formTitle = document.getElementById('form-title');
+            const submitBtn = document.getElementById('submit-btn');
+            const loginForm = document.getElementById('login-form');
+            const alertBox = document.getElementById('login-alert');
+            const confirmGroup = document.getElementById('confirm-password-group');
+            const confirmPasswordInput = document.getElementById('confirm-password');
+
+            toggleModeLink.addEventListener('click', (e) => {
+                e.preventDefault();
+                isLoginMode = !isLoginMode;
+                alertBox.style.display = 'none';
+
+                if (isLoginMode) {
+                    formTitle.textContent = 'Prijava na sistem';
+                    submitBtn.textContent = 'Prijavi se';
+                    toggleModeLink.textContent = 'Nemate nalog? Registrujte se';
+                    confirmGroup.style.display = 'none';
+                } else {
+                    formTitle.textContent = 'Registracija naloga';
+                    submitBtn.textContent = 'Registruj se';
+                    toggleModeLink.textContent = 'Već imate nalog? Prijavite se';
+                    confirmGroup.style.display = 'block';
+                }
+            });
+
+            loginForm.onsubmit = async function(e) {
+                e.preventDefault();
+                alertBox.style.display = 'none';
+
+                const username = document.getElementById('username').value.trim();
+                const password = document.getElementById('password').value;
+                const confirmPassword = confirmPasswordInput.value;
+
+                if (!username || !password) {
+                    alertBox.innerText = 'Korisničko ime i lozinka su obavezni!';
+                    alertBox.style.display = 'block';
+                    return;
+                }
+
+                if (!isLoginMode && password !== confirmPassword) {
+                    alertBox.innerText = 'Lozinke se ne podudaraju!';
+                    alertBox.style.display = 'block';
+                    return;
+                }
+
+                const endpoint = isLoginMode ? '/api/login' : '/api/register';
+                const payload = isLoginMode 
+                    ? { username, password } 
+                    : { username, password, confirmPassword };
+
+                try {
+                    const res = await fetch(endpoint, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
+
+                    const responseText = await res.text();
+                    let data;
+                    try {
+                        data = JSON.parse(responseText);
+                    } catch (parseErr) {
+                        data = { error: responseText || 'Nepoznata greška servera.' };
+                    }
+
+                    if (res.ok && data.success) {
+                        if (isLoginMode) {
+                            window.location.href = data.redirect || '/rezervacija';
+                        } else {
+                            alert('Uspešno ste se registrovali! Sada se možete prijaviti.');
+                            isLoginMode = true;
+                            formTitle.textContent = 'Prijava na sistem';
+                            submitBtn.textContent = 'Prijavi se';
+                            toggleModeLink.textContent = 'Nemate nalog? Registrujte se';
+                            confirmGroup.style.display = 'none';
+                            loginForm.reset();
+                        }
+                    } else {
+                        alertBox.innerText = data.error || 'Došlo je do greške.';
+                        alertBox.style.display = 'block';
+                    }
+                } catch (err) {
+                    console.error(err);
+                    alertBox.innerText = 'Greška u komunikaciji sa serverom.';
+                    alertBox.style.display = 'block';
+                }
+            };
+        });
+    </script>
+
+</body>
+</html>
